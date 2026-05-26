@@ -23,7 +23,7 @@ class BFHLServiceImplTest {
         BFHLResponse res = service.process(req);
 
         assertTrue(res.isSuccess());
-        assertEquals("shalini_21112004", res.getUserId());
+        assertEquals("shalini_pandey_21112004", res.getUserId());
         assertEquals("shalinipandey230900@acropolis.in", res.getEmail());
         assertEquals("0827CS231241", res.getRollNumber());
 
@@ -87,16 +87,19 @@ class BFHLServiceImplTest {
     }
 
     @Test
-    void nullInput_returnsEmptyResponse() {
+    void nullInput_returnsFailureResponse() {
         BFHLResponse res = service.process(null);
 
         assertFalse(res.isSuccess());
-        assertNull(res.getOddNumbers());
-        assertNull(res.getEvenNumbers());
-        assertNull(res.getAlphabets());
-        assertNull(res.getSpecialCharacters());
-        assertNull(res.getSum());
-        assertNull(res.getConcatString());
+        assertEquals("shalini_pandey_21112004", res.getUserId());
+        assertEquals("shalinipandey230900@acropolis.in", res.getEmail());
+        assertEquals("0827CS231241", res.getRollNumber());
+        assertEquals(Collections.emptyList(), res.getOddNumbers());
+        assertEquals(Collections.emptyList(), res.getEvenNumbers());
+        assertEquals(Collections.emptyList(), res.getAlphabets());
+        assertEquals(Collections.emptyList(), res.getSpecialCharacters());
+        assertEquals("0", res.getSum());
+        assertEquals("", res.getConcatString());
     }
 
     @Test

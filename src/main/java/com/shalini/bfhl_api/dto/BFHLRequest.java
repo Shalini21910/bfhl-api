@@ -12,6 +12,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class BFHLRequest {
-    // Generic list of tokens (strings). Service expects items like numbers, words, or special tokens.
     private List<String> data;
 }

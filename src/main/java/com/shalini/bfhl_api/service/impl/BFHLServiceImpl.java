@@ -12,26 +12,26 @@ import com.shalini.bfhl_api.service.BFHLService;
 @Service
 public class BFHLServiceImpl implements BFHLService {
 
-    private static final String USER_ID = "shalini_21112004";
+    private static final String USER_ID = "shalini_pandey_21112004";
     private static final String EMAIL = "shalinipandey230900@acropolis.in";
     private static final String ROLL_NUMBER = "0827CS231241";
 
     @Override
     public BFHLResponse process(BFHLRequest request) {
-if (request == null || request.getData() == null) {
-        return BFHLResponse.builder()
-                .isSuccess(false)
-                .userId(USER_ID)
-                .email(EMAIL)
-                .rollNumber(ROLL_NUMBER)
-                .oddNumbers(new ArrayList<>())
-                .evenNumbers(new ArrayList<>())
-                .alphabets(new ArrayList<>())
-                .specialCharacters(new ArrayList<>())
-                .sum("0")
-                .concatString("")
-                .build();
-    }
+        if (request == null || request.getData() == null) {
+            return BFHLResponse.builder()
+                    .isSuccess(false)
+                    .userId(USER_ID)
+                    .email(EMAIL)
+                    .rollNumber(ROLL_NUMBER)
+                    .oddNumbers(new ArrayList<>())
+                    .evenNumbers(new ArrayList<>())
+                    .alphabets(new ArrayList<>())
+                    .specialCharacters(new ArrayList<>())
+                    .sum("0")
+                    .concatString("")
+                    .build();
+        }
 
         List<String> oddNumbers = new ArrayList<>();
         List<String> evenNumbers = new ArrayList<>();
@@ -41,39 +41,28 @@ if (request == null || request.getData() == null) {
         int sum = 0;
         StringBuilder alphabetConcat = new StringBuilder();
 
-        if (request != null && request.getData() != null) {
+        for (String item : request.getData()) {
+            if (item == null || item.isEmpty()) {
+                continue;
+            }
 
-            for (String item : request.getData()) {
-
-                if (item.matches("\\d+")) {
-                    int number = Integer.parseInt(item);
-
-                    if (number % 2 == 0) {
-                        evenNumbers.add(item);
-                    } else {
-                        oddNumbers.add(item);
-                    }
-
-                    sum += number;
+            if (item.matches("\\d+")) {
+                int number = Integer.parseInt(item);
+                if (number % 2 == 0) {
+                    evenNumbers.add(item);
+                } else {
+                    oddNumbers.add(item);
                 }
-
-                else if (item.matches("[a-zA-Z]+")) {
-                    alphabets.add(item.toUpperCase());
-
-                    for (char ch : item.toCharArray()) {
-                        alphabetConcat.append(ch);
-                    }
-                }
-
-                else {
-                    specialCharacters.add(item);
-                }
+                sum += number;
+            } else if (item.matches("[a-zA-Z]+")) {
+                alphabets.add(item.toUpperCase());
+                alphabetConcat.append(item);
+            } else {
+                specialCharacters.add(item);
             }
         }
 
-        String concatString =
-                generateAlternatingCapsReverse(
-                        alphabetConcat.toString());
+        String concatString = generateAlternatingCapsReverse(alphabetConcat.toString());
 
         return BFHLResponse.builder()
                 .isSuccess(true)
