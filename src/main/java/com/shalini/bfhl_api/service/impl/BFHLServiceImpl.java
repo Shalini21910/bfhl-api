@@ -18,6 +18,20 @@ public class BFHLServiceImpl implements BFHLService {
 
     @Override
     public BFHLResponse process(BFHLRequest request) {
+if (request == null || request.getData() == null) {
+        return BFHLResponse.builder()
+                .isSuccess(false)
+                .userId(USER_ID)
+                .email(EMAIL)
+                .rollNumber(ROLL_NUMBER)
+                .oddNumbers(new ArrayList<>())
+                .evenNumbers(new ArrayList<>())
+                .alphabets(new ArrayList<>())
+                .specialCharacters(new ArrayList<>())
+                .sum("0")
+                .concatString("")
+                .build();
+    }
 
         List<String> oddNumbers = new ArrayList<>();
         List<String> evenNumbers = new ArrayList<>();
